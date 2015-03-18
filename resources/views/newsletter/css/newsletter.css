@@ -1,0 +1,132 @@
+.newsletter_logo{
+  margin: 20px 0 20px 0;
+}
+.newsletter_logo img{
+  height: 125px;
+}
+.newsletter_title{
+  background-color: lightcoral;
+  margin-bottom: 30px;
+}
+.newsletter_title h1{
+  padding: 40px;
+  display: inline-block;
+  max-width: 1000px;
+  margin: 0px;
+  color: #efefef;
+}
+.newsletter_description,
+.subscribed_number,
+.subscription_block,
+.social_share_copywrite{
+  margin: 0 auto;
+  width: 580px;
+}
+.newsletter_description p,
+.subscribed_number p{
+  color: #7D787F;
+  font-size: 18px;
+  line-height: 1.7;
+}
+.subscribed_number{
+  margin: 30px auto 0 auto;
+}
+.subscribed_number p{
+  color: lightcoral;
+  text-align: center;
+}
+.subscription_block{
+  background-color: #ddd;
+  padding: 30px 20px;
+  margin-bottom: 30px;
+}
+.subscription_block .form-control{
+  height: 50px;
+  font-size: 16px;
+  border-radius: 0px;
+}
+.subscription_block .btn{
+  height: 50px;
+  font-size: 18px;
+  border-radius: 0px;
+}
+.subscription_block label{
+  font-size: 16px;
+  font-weight: 400;
+  color: slategray;
+}
+.social_share_copywrite{
+  color: #999;
+}
+.social_share_copywrite .social_share .fa{
+  font-size: 22px;
+  cursor: pointer;
+  color: #999;
+}
+.social_share_copywrite .social_share .fa-facebook-square:hover{
+  color: #3B5998;
+}
+.social_share_copywrite .social_share .fa-twitter-square:hover{
+  color: #4099FF;
+}
+.social_share_copywrite .social_share .fa-google-plus-square:hover{
+  color: #d34836;
+}
+.social_share_copywrite .social_share .fa-linkedin-square:hover{
+  color: #0e76a8;
+}
+
+@media (max-width:620px) {
+
+  .newsletter_description,
+  .subscribed_number,
+  .subscription_block,
+  .social_share_copywrite{
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .newsletter_title h1{
+    padding: 20px;
+    font-size: 1.6em;
+    font-weight: 200;
+    max-width: 100%;
+    display: block;
+  }
+
+  .newsletter_logo img{
+    height: 109px;
+  }
+
+}
+
+@media (max-width:400px) {
+
+  .newsletter_title{
+    margin-bottom: 20px;
+  }
+
+  .newsletter_title h1{
+    padding: 10px 5px;
+    display: block;
+  }
+
+  .newsletter_logo img{
+    height: 70px;
+  }
+
+  .newsletter_description p{
+    font-size: 16px;
+  }
+
+  .social_share_copywrite .social_share,
+  .social_share_copywrite .copywrite{
+    float: none !important;
+    text-align: center;
+  }
+
+  .social_share_copywrite .social_share{
+    margin-top: 20px;
+  }
+
+}
