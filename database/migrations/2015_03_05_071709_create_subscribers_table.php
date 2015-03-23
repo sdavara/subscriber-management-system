@@ -20,7 +20,8 @@ class CreateSubscribersTable extends Migration {
 			$table->string('email');
 			$table->string('confirmation_code');
 			$table->boolean('confirmed');
-            $table->enum('status', array('subscribed', 'unsubscribed'));
+      $table->enum('status', array('subscribed', 'unsubscribed'));
+      $table->timestamps();
 		});
 	}
 

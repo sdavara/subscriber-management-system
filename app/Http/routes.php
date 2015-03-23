@@ -11,11 +11,34 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
-
-Route::get('home', 'HomeController@index');
+// Route::get('/', 'WelcomeController@index');
+// Route::get('home', 'HomeController@index');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+// Admin
+Route::group(array('prefix' => 'admin', 'middleware' => 'auth'), function() {
+
+  # Subscriber Management
+  Route::get('/subscriber', 'AdminController@getSubscribers');
+
+  # Settings Managment
+  Route::get('/settings', 'AdminController@showSettings');
+  Route::post('/settings/{Id}', 'AdminController@postSettings');
+
+
+  # Admin Dashboard
+  Route::get('/', 'AdminController@index');
+
+});
+
+//subscriber
+Route::get('/', ['middleware' => 'guest','uses' =>'SubscriberController@index']);
+Route::get('/subscribe','SubscriberController@index');
+Route::post('/subscribe','SubscriberController@store');
+
+Route::get('/verify/{confirmationCode}','SubscriberController@confirm');
+Route::get('/unsubscribe/{confirmationCode}',['middleware' => 'guest', 'uses' => 'SubscriberController@unsubscribe']);
