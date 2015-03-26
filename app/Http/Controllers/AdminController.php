@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\SubscriberFormRequest;
 use Mail;
 use Lang;
+use Config;
 
 
 class AdminController extends Controller {
@@ -66,7 +67,6 @@ class AdminController extends Controller {
   {
     // Grab all the subscribers
     $subscribers = $this->subscribers->all();
-
     return view('admin.subscribers', compact('subscribers'));
 
   }
@@ -79,7 +79,21 @@ class AdminController extends Controller {
   public function showSettings()
   {
     $settings = Settings::find(1);
-    return view('admin.settings', compact('settings'));
+    $projectThemes = Config::get('app.themes');
+    $thumbnails;
+
+    foreach($projectThemes as $themes){
+      if ($handle = opendir(public_path().'/thumbnails/'.$themes)) {
+              $blacklist = array('.', '..','.DS_Store');
+              while (false !== ($file = readdir($handle))) {
+                  if (!in_array($file, $blacklist)) {
+                     $thumbnails[$themes] = '/thumbnails/'.$themes.'/'.$file;
+                  }
+              }
+              closedir($handle);
+        }
+    }
+   return view('admin.settings', compact('settings','thumbnails','projectThemes'));
   }
 
   /**
@@ -93,8 +107,10 @@ class AdminController extends Controller {
     $oldSettings = Settings::find($Id);
 
     //Rename and upload file
-    if(($request->file('logo')))
-    {
+    if(is_null($request->file('logo'))){
+      $settings['logo'] = null;
+
+    }else{
       $file = $request->file('logo');
       $fileName = str_random(6).'_'.$file->getClientOriginalName();
       $file->move(public_path().'/uploads', $fileName);

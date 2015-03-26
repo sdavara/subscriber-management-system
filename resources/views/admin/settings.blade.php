@@ -71,15 +71,22 @@
               <label class="col-md-4 control-label">Logo</label>
 
               <div class="col-md-6">
-                <label type="text" class="form-control" name="Newlogo" id="Newlogo" value="" readonly style="display:block">{{{ old('logo',isset($settings) ? $settings->logo : null) }}}</label>
+               @if($settings->logo)
+                    <img src="/uploads/{{$settings->logo}}" name="Newlogo" id="Newlogo" style="border:solid 2px #000;" border="2" height="100" />
+               @else
+                    <img src="#" name="Newlogo" id="Newlogo" border="2"   height="100" readonly style="display:block"/>
+               @endif
+                <!-- <label type="text" class="form-control" name="Newlogo" id="Newlogo" value="" readonly style="display:block">{{{ old('logo',isset($settings) ? $settings->logo : null) }}}</label> -->
               </div>
+              <br>
               <button type="button" class="btn btn-info" id="logo_change" onclick="change(this.id)">Change</button>
 
               <div class="col-md-6" id="logoblock" style="display:none">
               <form class="form-horizontal form-inline" role="form" method="POST" action="@if(isset($settings)){{ URL::to('/admin/settings/'.$settings->id) }}
                         @else{{ URL::to('admin/settings/add') }}@endif"  enctype="multipart/form-data">
                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                  <input class="form-control" type="file" name="logo" id="logo" class="input-medium" value="{{{ old('logo',isset($settings) ? $settings->logo : null) }}}"  />
+
+                  <input class="form-control input-medium" type="file" name="logo" id="logo" value="{{{ old('logo',isset($settings) ? $settings->logo : null) }}}"  />
                   <button type="submit" name="Save" class="btn btn-primary">Save</button>
                   <input type="button" name="Cancel" value="Cancel" id="logo_cancel" onclick="cancel(this.id)" class="btn btn-info"/>
               </form>
@@ -87,6 +94,7 @@
               <br>
 
             </div>
+            <br>
             <br>
 
             <div class="form-group">
@@ -118,19 +126,28 @@
               <label class="col-md-4 control-label">Theme</label>
 
               <div class="col-md-6">
-                <label type="text" class="form-control" name="Newtheme" value="" id="Newtheme" readonly style="display:block">{{{ old('theme',isset($settings) ? $settings->theme : null) }}}</label>
-              </div>
+                <form class="form-horizontal form-inline" role="form" method="POST" action="@if(isset($settings)){{ URL::to('/admin/settings/'.$settings->id) }}
+                @else{{ URL::to('admin/settings/add') }}@endif"  enctype="multipart/form-data">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-              <button type="button" class="btn btn-info" id="theme_change" onclick="change(this.id)">Change</button>
-
-               <div class="col-md-6" id="themeblock" style="display:none">
-               <form class="form-horizontal form-inline" role="form" method="POST" action="@if(isset($settings)){{ URL::to('/admin/settings/'.$settings->id) }}
-                        @else{{ URL::to('admin/settings/add') }}@endif"  enctype="multipart/form-data">
-                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                  <input class="form-control" type="text" name="theme" id="theme" value="index" class="input-medium"  />
-                  <button type="submit" name="Save" class="btn btn-primary">Save</button>
-                  <input type="button" name="Cancel" value="Cancel" id="theme_cancel" onclick="cancel(this.id)" class="btn btn-info"/>
+                <input type="radio" id="theme" name="theme" value="default" {{{ $settings->theme == 'default' ? 'checked' : '' }}}>
+                <label for="plan">
+                  <b>Light</b>
+                </label>
+                    @if($thumbnails['default'])
+                        <?php echo '<img src="',$thumbnails['default'],'" height="90"  style="border:solid 2px #000;" />';?>
+                    @endif
+                <input type="radio" name="theme" value="dark" class="radio" id="theme" {{{ $settings->theme == 'dark' ? 'checked' : '' }}}>
+                <label for="plan">
+                  <b>dark</b>
+                </label>
+                   @if($thumbnails['dark'])
+                        <?php echo '<img src="',$thumbnails['dark'],'" height="90" style="border:solid 2px #000;" />';?>
+                    @endif
+                <button type="button" class="btn btn-info" id="theme_change" onclick="changetheme(this.id)">Change</button>
+                <button type="submit" name="Save" id="savetheme" class="btn btn-primary form-inline" style="display:none">Save</button>
                 </form>
+              </div>
               </div>
              </div>
             </div>
@@ -160,6 +177,11 @@
     document.getElementById(element+"_change" ).style.display="block";
     document.getElementById(element+"block").style.display="none";
 
+  }
+
+  function changetheme(){
+    document.getElementById('theme_change').style.display="none";
+    document.getElementById('savetheme').style.display="block";
   }
 
 </script>​

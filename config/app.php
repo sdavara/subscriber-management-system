@@ -197,4 +197,6 @@ return [
 
 	],
 
+	 "themes"    =>  array('default','dark'),
+
 ];

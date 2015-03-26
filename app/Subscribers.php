@@ -27,11 +27,11 @@ class Subscribers extends Model {
   public function updateStatus($subscriber)
   {
     $subscribers = subscribers::find($subscriber->id);
-    if($subscriber->status == "subscribe")
+    if($subscriber->status == "subscribed")
     {
-      $subscriber->update(['status' => 'subscribed']);
-    }else{
       $subscriber->update(['status' => 'unsubscribed']);
+    }else{
+      $subscriber->update(['status' => 'subscribed']);
     }
 
 

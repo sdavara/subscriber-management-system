@@ -34,7 +34,29 @@ class SubscriberController extends Controller {
   public function index()
   {
     $settings = Settings::find(1);
-    return view($settings->theme,compact('settings'));
+
+    if($settings && $settings->theme) {
+       return view('themes/'.$settings->theme.'/index',compact('settings'));
+    }
+    return view('index');
+  }
+
+  public function confirmed()
+  {
+    $settings = Settings::find(1);
+    if($settings && $settings->theme) {
+       return view('themes/'.$settings->theme.'/confirmed',compact('settings'));
+    }
+    return view('themes/default/confirmed');
+  }
+
+  public function thanks()
+  {
+    $settings = Settings::find(1);
+    if($settings && $settings->theme) {
+       return view('themes/'.$settings->theme.'/thanks',compact('settings'));
+    }
+    return view('themes/default/thanks');
   }
 
   /**
@@ -54,14 +76,14 @@ class SubscriberController extends Controller {
         // Re-new subscription
         $subscriber->updateStatus($subscriber);
 
-        return Redirect('/')->with('message', Lang::get('admin/subscribers/message.subscription.renew'));
+        return Redirect('/confirmed')->with('message', Lang::get('admin/subscriber/message.subscription.renew'));
       }
       else if ( !$subscriber->confirmed && ($subscriber->status == "subscribed") )
       {
         // Send confirm email
         $this->deliverMail($subscriber,'confirmation');
 
-        return Redirect('/')->with('message', Lang::get('admin/subscriber/email/message.verfiy'));
+        return Redirect('/thanks')->with('message', Lang::get('admin/subscriber/email/message.verfiy'));
 
       }
       else if(($subscriber->confirmed) && ($subscriber->status == "subscribed"))
@@ -69,7 +91,7 @@ class SubscriberController extends Controller {
         $this->deliverMail($subscriber,'confirmed');
         $messages = "your email address is verified!" ;
 
-        return Redirect('/')->with('message',Lang::get('admin/subscriber/email/message.verfied'));
+        return Redirect('/confirmed')->with('message',Lang::get('admin/subscriber/email/message.verfied'));
       }
 
     }
@@ -87,7 +109,7 @@ class SubscriberController extends Controller {
 
       $this->deliverMail($subscriber,'confirmation');
 
-      return Redirect('/')->with('message', Lang::get('admin/subscriber/message.register.success'));
+      return Redirect('/thanks')->with('message', Lang::get('admin/subscriber/message.register.success'));
     }
 
   }
@@ -99,7 +121,7 @@ class SubscriberController extends Controller {
      *
      */
 
-  public function confirm($confirmation_code)
+  public function confirmSubscriber($confirmation_code)
   {
     $subscriber = Subscribers::where('confirmation_code','=',$confirmation_code)->first();
     if ( ! $subscriber )
@@ -108,7 +130,7 @@ class SubscriberController extends Controller {
     }
     $subscriber->update(['confirmed' => '1']);
 
-    return Redirect('/')->with('message', Lang::get('admin/subscriber/email/message.verfied'));
+    return Redirect('/confirmed')->with('message', Lang::get('admin/subscriber/email/message.verfied'));
   }
 
   /**
