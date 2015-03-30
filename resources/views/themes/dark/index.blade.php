@@ -61,7 +61,7 @@
                @if($settings->title)
                   <h1> {{$settings->title}}</h1>
                @else
-                   <h1>News Letter</h1>
+                  <h1>News Letter</h1>
                @endif
               </div>
             </div>
@@ -81,60 +81,33 @@
 
             <div class="col-sm-5">
             <div class="subscriptionBox">
-            <!--  @if (Session::has('message'))
-                <div class="alert alert-success" style="background-color:transparent">
-                  <p style="color:white"><b> {{ Session::get('message') }}</b></p>
-                </div>
-            @endif -->
-            <form id="subscription_block" role="form" method="POST" action="/subscribe">
-             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-              <div class="form-group">
-                <label for="Email">Email Address</label>
-                <input type="email" class="form-control" name="email" value="{{ old('email') }}" id="Email">
-                {!! ($errors->first('email', '<span class="help-inline" style="color:#e85c41">:message</span>')) !!}
-              </div>
-              <div class="form-group">
-                <label for="Fname">First Name</label>
-                <input type="text" class="form-control" name="firstName" value="{{ old('firstName') }}" id="Fname">
-               {!! ($errors->first('firstName', '<span class="help-inline" style="color:#e85c41">:message</span>')) !!}
-              </div>
-              <div class="form-group">
-                <label for="Lname">Last Name</label>
-                <input type="text" class="form-control" name="lastName" value="{{ old('lastName') }}" id="Lname">
-                 {!! ($errors->first('lastName', '<span class="help-inline" style="color:#e85c41">:message</span>')) !!}
-              </div>
-              <button type="submit" class="btn btn-success btn-block" name="submit" id="submit">Subscribe</button>
-            </form>
+
+            {!!Form::open(['url'=>'/subscribe','method'=>'POST','id'=>'subscription_block'])!!}
+
+            <div class="form-group">
+              {!! Form::label('email','Email',['class'=>'control-label']) !!}
+              {!! Form::text('email',Input::old('email'), ['id' => 'email' ,'class' => 'form-control']) !!}
+              {!! ($errors->first('email', '<span class="help-inline" style="color:#e85c41">:message</span>')) !!}
             </div>
-           <!--    <div class="subscriptionblock" >
-             @if (Session::has('message'))
-                <div class="alert alert-info">
-                  <p>{{ Session::get('message') }}</p>
-                </div>
-            @endif
 
-             <form id="subscription_block" role="form" method="POST" action="/subscribe">
-             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-              <div class="form-group">
-                <label for="Email">Email Address</label>
-                <input type="email" class="form-control" name="email" value="{{ old('email') }}" id="Email">
-                {!! ($errors->first('email', '<span class="help-inline" style="color:#e85c41">:message</span>')) !!}
+            <div class="form-group">
+              {!! Form::label('firstName','First Name',['class'=>' control-label']) !!}
+              {!! Form::text('firstName',Input::old('firstName'), ['id' => 'firstName' ,'class' => 'form-control']) !!}
+              {!! ($errors->first('firstName', '<span class="help-inline" style="color:#e85c41">:message</span>')) !!}
+            </div>
 
+            <div class="form-group">
+              {!! Form::label('lastName','Last Name',['class'=>' control-label']) !!}
+              {!! Form::text('lastName',Input::old('lastName'), ['id' => 'lastName' ,'class' => 'form-control']) !!}
+              {!! ($errors->first('lastName', '<span class="help-inline" style="color:#e85c41">:message</span>')) !!}
+            </div>
 
-              </div>
-              <div class="form-group">
-                <label for="Fname">First Name</label>
-                <input type="text" class="form-control" name="firstName" value="{{ old('firstName') }}" id="Fname">
-               {!! ($errors->first('firstName', '<span class="help-inline" style="color:#e85c41">:message</span>')) !!}
-              </div>
-              <div class="form-group">
-                <label for="Lname">Last Name</label>
-                <input type="text" class="form-control" name="lastName" value="{{ old('lastName') }}" id="Lname">
-                 {!! ($errors->first('lastName', '<span class="help-inline" style="color:#e85c41">:message</span>')) !!}
-              </div>
-               <button type="submit" class="btn btn-success btn-block" name="submit" id="submit">Subscribe</button>
-            </form>
-          </div> -->
+            <div class="form-group">
+              {!! Form::submit('Subscribe',array('id' => 'submit' ,'class'=>'btn btn-success btn-block')) !!}
+            </div>
+
+            {!!Form::close()!!}
+            </div>
             </div>
           </div>
 

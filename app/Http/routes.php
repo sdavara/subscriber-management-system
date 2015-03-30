@@ -40,7 +40,7 @@ Route::get('/', ['middleware' => 'guest','uses' =>'SubscriberController@index'])
 Route::get('/subscribe','SubscriberController@index');
 Route::post('/subscribe','SubscriberController@store');
 
-Route::get('/thanks','SubscriberController@confirmed');
+Route::get('/thanks','SubscriberController@thanks');
 Route::get('/verify/{confirmationCode}','SubscriberController@confirmSubscriber');
 Route::get('/confirmed','SubscriberController@confirmed');
 Route::get('/unsubscribe/{confirmationCode}',['middleware' => 'guest', 'uses' => 'SubscriberController@unsubscribe']);

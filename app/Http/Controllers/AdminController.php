@@ -106,11 +106,8 @@ class AdminController extends Controller {
     $settings = $request->all();
     $oldSettings = Settings::find($Id);
 
-    //Rename and upload file
-    if(is_null($request->file('logo'))){
-      $settings['logo'] = null;
-
-    }else{
+    // Rename and upload file
+    if($request->file('logo')){
       $file = $request->file('logo');
       $fileName = str_random(6).'_'.$file->getClientOriginalName();
       $file->move(public_path().'/uploads', $fileName);

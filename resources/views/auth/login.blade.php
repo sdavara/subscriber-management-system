@@ -18,27 +18,25 @@
 						</div>
 					@endif
 
-					<form class="form-horizontal" role="form" method="POST" action="/auth/login">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+					{!!Form::open(['url'=>'/auth/login','method'=>'POST','id'=>'subscription_block', 'class'=> 'form-horizontal'])!!}
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">E-Mail Address</label>
-							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
-							</div>
-						</div>
+              {!! Form::label('email','E-Mail Address',['class'=>'col-md-4 control-label']) !!}
+              <div class="col-md-6">
+	              {!! Form::email('email',Input::old('email'), ['id' => 'email' ,'class' => 'form-control']) !!}
+            	</div>
+            </div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">Password</label>
+						{!! Form::label('password','password',['class'=>'col-md-4 control-label']) !!}
 							<div class="col-md-6">
-								<input type="password" class="form-control" name="password">
+								{!! Form::password('password',['class' =>'form-control'])!!}
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
 								<div class="checkbox">
-									<label>
 										<input type="checkbox" name="remember"> Remember Me
 									</label>
 								</div>
@@ -47,14 +45,12 @@
 
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary" style="margin-right: 15px;">
-									Login
-								</button>
-
+								{!! Form::submit('Login',array('class'=>'btn btn-primary','style' => 'margin-right: 15px;')) !!}
 								<a href="/password/email">Forgot Your Password?</a>
 							</div>
 						</div>
-					</form>
+
+					{!!Form::close()!!}
 				</div>
 			</div>
 		</div>

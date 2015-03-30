@@ -6,7 +6,8 @@
 	"type": "project",
 	"require": {
 		"laravel/framework": "5.0.*",
-		"intervention/image": "dev-master"
+		"intervention/image": "dev-master",
+		 "illuminate/html": "5.*"
 
 	},
 	"require-dev": {
