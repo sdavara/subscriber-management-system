@@ -35,6 +35,15 @@ Route::group(array('prefix' => 'admin', 'middleware' => 'auth'), function() {
 
 });
 
+Route::group(array('prefix'=>'install','before'=>'install'),function()
+{
+    Route::get('/installation','InstallController@getIndex');
+    Route::get('/database','InstallController@getDatabase');
+    Route::post('/database','InstallController@postDatabase');
+    Route::post('/timezone','InstallController@postTimeZone');
+    Route::post('/adminaccount','InstallController@postAdminAccount');
+});
+
 //subscriber
 Route::get('/', ['middleware' => 'guest','uses' =>'SubscriberController@index']);
 Route::get('/subscribe','SubscriberController@index');
