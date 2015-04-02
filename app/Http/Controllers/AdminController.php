@@ -78,7 +78,7 @@ class AdminController extends Controller {
    */
   public function showSettings()
   {
-    $settings = Settings::find(1);
+    $settings = $settings = Settings::where('id','!=','')->first();
     $projectThemes = Config::get('app.themes');
     $thumbnails;
 

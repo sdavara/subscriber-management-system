@@ -33,7 +33,7 @@ class SubscriberController extends Controller {
    */
   public function index()
   {
-    $settings = Settings::find(1);
+    $settings = Settings::where('id','!=','')->first();
 
     if($settings && $settings->theme) {
        return view('themes/'.$settings->theme.'/index',compact('settings'));
@@ -43,7 +43,7 @@ class SubscriberController extends Controller {
 
   public function confirmed()
   {
-    $settings = Settings::find(1);
+    $settings = Settings::where('id','!=','')->first();
     if($settings && $settings->theme) {
        return view('themes/'.$settings->theme.'/confirmed',compact('settings'));
     }
@@ -52,7 +52,7 @@ class SubscriberController extends Controller {
 
   public function thanks()
   {
-    $settings = Settings::find(1);
+    $settings = Settings::where('id','!=','')->first();
     if($settings && $settings->theme) {
        return view('themes/'.$settings->theme.'/thanks',compact('settings'));
     }

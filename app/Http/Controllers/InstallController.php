@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Exception;
 use Hash;
 use Log;
+use File;
 
 
 class InstallController extends Controller {
@@ -58,12 +59,21 @@ class InstallController extends Controller {
     $data = $request->all();
     $newDbConfig = new NewConfig;
 
-    $newDbConfig->toFile(config_path().'/database.php', [
-              'connections.mysql.host' =>   env('DB_HOST', $data['Host']),
-              'connections.mysql.database' =>env('DB_DATABASE', $data['database']),
-              'connections.mysql.username' =>env('DB_USERNAME', $data['username']),
-              'connections.mysql.password' =>env('DB_PASSWORD', $data['password']),
-            ]);
+   $newDbConfig->toFile(config_path().'/database.php', [
+        'connections.mysql.host'     =>$data['Host'],
+        'connections.mysql.database' =>$data['database'],
+        'connections.mysql.username' =>$data['username'],
+        'connections.mysql.password' =>$data['password'],
+      ]);
+
+
+    $data = "APP_ENV = local \nAPP_DEBUG = true \nAPP_HOST=" .  $data['Host']."\nDB_DATABASE=" .$data['database'] ."\nDB_USERNAME=" .$data['username'] ."\nDB_PASSWORD=" .$data['password'] ."\nCACHE_DRIVER=file\nSESSION_DRIVER=file\nAPP_KEY=SomeRandomString";
+
+    $file = fopen(base_path().'/.env',"w");
+
+    fwrite($file, print_r($data, TRUE));
+    fclose($file);
+
 
     DB::unprepared(file_get_contents(app_path().'/newsletter.sql'));
 
@@ -88,7 +98,7 @@ class InstallController extends Controller {
         {
            User::create([
             'email' => $data['email'] ,
-            'password' => $data['password'] ,
+            'password' => bcrypt($data['password']),
             'name' => $data['firstName'] ,
             ]);
             $installationDate = date('Y-m-d H:i:s');
@@ -108,9 +118,4 @@ class InstallController extends Controller {
             return false;
         }
   }
-
-
-
-
-
 }
