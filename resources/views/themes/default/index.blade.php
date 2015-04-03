@@ -9,6 +9,8 @@
 
             @if($settings->logo)
               <img src="uploads/{{$settings->logo}}">
+              @else
+               <img src="/img/improwised.jpg">
             @endif
 
             </div>
@@ -87,13 +89,7 @@
 
           <!-- social share & copywrite -->
           <div class="clearfix social_share_copywrite">
-            <p class="social_share pull-right">
-              <a href=""><i class="fa fa-facebook-square"></i></a>
-              <a href=""><i class="fa fa-twitter-square"></i></a>
-              <a href=""><i class="fa fa-google-plus-square"></i></a>
-              <a href=""><i class="fa fa-linkedin-square"></i></a>
-            </p>
-            <p class="copywrite pull-left">© 2015. Improwised Technologies Pvt. Ltd.</p>
+              <p class="copywrite pull-left">© 2015. Improwised Technologies Pvt. Ltd.</p>
           </div>
 
         </div>

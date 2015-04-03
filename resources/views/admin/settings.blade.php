@@ -129,8 +129,7 @@
                 {!! HTML::image($thumbnails['dark'], '', array('class' => 'thumbnail' , 'style' => 'border:solid 2px #000;', 'width' => '151','height' => '90')) !!}
               @endif
 
-              {!! Form::button('Change', array('class'=>'btn btn-info' , 'id' => 'theme_change' ,'onclick'=>"changetheme(this.id)" )) !!}
-              {!! Form::submit('Save',array('id' => 'savetheme' ,'class'=>'btn btn-primary', 'style'=>'display:none')) !!}
+              {!! Form::submit('Save',array('id' => 'savetheme' ,'class'=>'btn btn-primary')) !!}
               {!! Form::close() !!}
 
 
@@ -164,11 +163,6 @@
     document.getElementById(element+"_change" ).style.display="block";
     document.getElementById(element+"block").style.display="none";
 
-  }
-
-  function changetheme(){
-    document.getElementById('theme_change').style.display="none";
-    document.getElementById('savetheme').style.display="block";
   }
 
 </script>​
