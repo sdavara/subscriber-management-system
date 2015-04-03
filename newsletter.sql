@@ -6,8 +6,8 @@
 # http://code.google.com/p/sequel-pro/
 #
 # Host: 127.0.0.1 (MySQL 5.6.19)
-# Database: forge
-# Generation Time: 2015-04-02 05:43:56 +0000
+# Database: news4
+# Generation Time: 2015-04-03 06:01:24 +0000
 # ************************************************************
 
 
@@ -35,10 +35,10 @@ LOCK TABLES `migrations` WRITE;
 
 INSERT INTO `migrations` (`migration`, `batch`)
 VALUES
-  ('2014_10_12_000000_create_users_table',1),
-  ('2014_10_12_100000_create_password_resets_table',1),
-  ('2015_03_05_071709_create_subscribers_table',1),
-  ('2015_03_18_111615_create_setting_table',1);
+	('2014_10_12_000000_create_users_table',1),
+	('2014_10_12_100000_create_password_resets_table',1),
+	('2015_03_05_071709_create_subscribers_table',1),
+	('2015_03_18_111615_create_setting_table',1);
 
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -77,6 +77,15 @@ CREATE TABLE `settings` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+LOCK TABLES `settings` WRITE;
+/*!40000 ALTER TABLE `settings` DISABLE KEYS */;
+
+INSERT INTO `settings` (`id`, `logo`, `title`, `subtitle`, `description`, `theme`, `isactive`, `created_at`, `updated_at`)
+VALUES
+	(1,'improwised.jpg','News Letter','Latest News Ever!','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s\n                              standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it\n                              to make a type specimen book. It has survived not only five centuries, but also the leap into\n                              electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of\n                              Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus\n                              PageMaker including versions of Lorem Ipsum.','',0,'0000-00-00 00:00:00','0000-00-00 00:00:00');
+
+/*!40000 ALTER TABLE `settings` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table subscribers
@@ -116,6 +125,15 @@ CREATE TABLE `users` (
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`)
+VALUES
+	(1,'user','user@gmail.com','$2y$10$HYD1pVwsQLBujBDkzTsHGu6Ps7BlOzKkwfY4hL2szM9X6qsHlHNgm',NULL,'2015-04-03 07:00:17','2015-04-03 07:00:17');
+
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 
