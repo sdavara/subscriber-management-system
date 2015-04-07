@@ -1,6 +1,5 @@
 <?php namespace App\Http\Controllers;
 
-
 use Redirect;
 use App\User;
 use App\Subscribers;
@@ -8,30 +7,10 @@ use App\Settings;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\SubscriberFormRequest;
-use Mail;
 use Lang;
 use Config;
 
-
 class AdminController extends Controller {
-
-  /**
-     * User Model
-     * @var User
-     */
-    protected $user;
-
-  /**
-   * Subscribers Model
-   * @var Subscribers
-   */
-    protected $subscribers;
-
-  /**
-   * Settings Model
-   * @var Settings
-   */
-    protected $settings;
 
 
   /**
@@ -39,12 +18,9 @@ class AdminController extends Controller {
    *
    * @return void
    */
-  public function __construct(User $user,Subscribers $subscribers,Settings $settings)
+  public function __construct()
   {
     $this->middleware('auth');
-    $this->user = $user;
-    $this->subscribers = $subscribers;
-    $this->settings = $settings;
   }
 
 
@@ -63,10 +39,10 @@ class AdminController extends Controller {
    *
    * @return Response
    */
-  public function getSubscribers()
+  public function getSubscribers(Subscribers $subscribers)
   {
     // Grab all the subscribers
-    $subscribers = $this->subscribers->all();
+    $subscribers = $subscribers->all();
     return view('admin.subscribers', compact('subscribers'));
 
   }
@@ -78,7 +54,7 @@ class AdminController extends Controller {
    */
   public function showSettings()
   {
-    $settings = $settings = Settings::where('id','!=','')->first();
+    $settings = Settings::where('id','!=','')->first();
     $projectThemes = Config::get('app.themes');
     $thumbnails;
 
@@ -97,14 +73,14 @@ class AdminController extends Controller {
   }
 
   /**
-   * Add the Settings.
+   * Edit the Settings.
    *
    * @return Response
    */
-  public function postSettings(Request $request,$Id)
+  public function postSettings(Request $request)
   {
     $settings = $request->all();
-    $oldSettings = Settings::find($Id);
+    $oldSettings = Settings::where('id','!=','')->first();
 
     // Rename and upload file
     if($request->file('logo')){

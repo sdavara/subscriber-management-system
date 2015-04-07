@@ -27,21 +27,11 @@ Route::group(array('prefix' => 'admin', 'middleware' => 'auth'), function() {
 
   # Settings Managment
   Route::get('/settings', 'AdminController@showSettings');
-  Route::post('/settings/{Id}', 'AdminController@postSettings');
-
+  Route::post('/settings', 'AdminController@postSettings');
 
   # Admin Dashboard
   Route::get('/', 'AdminController@index');
 
-});
-
-Route::group(array('prefix'=>'install','before'=>'install'),function()
-{
-    Route::get('/installation','InstallController@getIndex');
-    Route::get('/database','InstallController@getDatabase');
-    Route::post('/database','InstallController@postDatabase');
-    Route::post('/timezone','InstallController@postTimeZone');
-    Route::post('/adminaccount','InstallController@postAdminAccount');
 });
 
 //subscriber

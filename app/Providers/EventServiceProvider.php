@@ -2,6 +2,13 @@
 
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use App\Events\SubscriberWasCreated;
+use App\Handlers\Events\NotifySubscribersOfSubscription;
+use App\Events\SubscriberWasConfirmed;
+use App\Handlers\Events\NotifyAdminOfSubscriberSubscription;
+use App\Handlers\Events\NotifySubscriberOfConfirmation;
+use App\Events\SubscriberWasUnsubscribed;
+use App\Handlers\Events\NotifyAdminOfSubscriberUnsubscription;
 
 class EventServiceProvider extends ServiceProvider {
 
@@ -11,8 +18,15 @@ class EventServiceProvider extends ServiceProvider {
 	 * @var array
 	 */
 	protected $listen = [
-		'event.name' => [
-			'EventListener',
+		SubscriberWasCreated::class => [
+			NotifySubscribersOfSubscription::class,
+		],
+		SubscriberWasConfirmed::class => [
+			NotifyAdminOfSubscriberSubscription::class,
+			NotifySubscriberOfConfirmation::class,
+		],
+		SubscriberWasUnsubscribed::class => [
+			NotifyAdminOfSubscriberUnsubscription::class,
 		],
 	];
 

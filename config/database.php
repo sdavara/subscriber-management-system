@@ -52,16 +52,17 @@ return [
 			'prefix'   => '',
 		],
 
-	'mysql' => array(
-			'driver'    => 'mysql',
-			'host'      => '127.0.0.1',
-			'database'  => 'news2',
-			'username'  => 'root',
-			'password'  => '123456',
-			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
-			'prefix'    => '',
-		),
+		'mysql' => [
+        'driver'    => 'mysql',
+        'host'      => env('DB_HOST', 'localhost'),
+        'database'  => env('DB_DATABASE', 'forge'),
+        'username'  => env('DB_USERNAME', 'forge'),
+        'password'  => env('DB_PASSWORD', ''),
+        'charset'   => 'utf8',
+        'collation' => 'utf8_unicode_ci',
+        'prefix'    => '',
+        'strict'    => false,
+    ],
 
 
 		'pgsql' => [
@@ -115,9 +116,9 @@ return [
 		'cluster' => false,
 
 		'default' => [
-			'host'     => 'localhost',
+			'host'     => '127.0.0.1',
 			'port'     => 6379,
-			'database' => 'newsletter',
+			'database' => 0,
 		],
 
 	],

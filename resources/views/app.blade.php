@@ -42,9 +42,7 @@
 
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::guest())
-					@if(Request::is('install/*') != true)
 						<li><a href="/auth/login">Login</a></li>
-					@endif
 						<!-- <li><a href="/auth/register">Register</a></li> -->
 					@else
 						<li class="dropdown">

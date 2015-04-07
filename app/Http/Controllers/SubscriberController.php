@@ -1,29 +1,29 @@
 <?php namespace App\Http\Controllers;
 
-use Redirect;
 use App\User;
 use App\Subscribers;
 use App\Settings;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\SubscriberFormRequest;
-use Mail;
+use App\Commands\CreateSubscriberCommand;
+use App\Commands\ConfirmSubscriberCommand;
+use App\Commands\UnsubscribeSubscriberCommand;
 use Lang;
+use Mail;
+use Illuminate\Http\RedirectResponse;
+use Redirect;
+
 
 
 class SubscriberController extends Controller {
-
 
   /**
    * Create a new controller instance.
    *
    * @return void
    */
-  public function __construct(User $user,Subscribers $subscribers,Settings $settings)
+  public function __construct()
   {
     $this->middleware('guest');
-    $this->user = $user;
-    $this->subscribers = $subscribers;
-    $this->settings = $settings;
   }
 
   /**
@@ -33,28 +33,37 @@ class SubscriberController extends Controller {
    */
   public function index()
   {
-    $settings = Settings::where('id','!=','')->first();
-
-    if($settings && $settings->theme) {
-       return view('themes/'.$settings->theme.'/index',compact('settings'));
+    if($this->settings() && $this->settings()->theme) {
+      $settings = $this->settings();
+      return view('themes/'.$this->settings()->theme.'/index',compact('settings'));
     }
     return view('index');
   }
 
+  /**
+   * Redirect subscriber to confirmation page.
+   *
+   * @return Response
+   */
   public function confirmed()
   {
-    $settings = Settings::where('id','!=','')->first();
-    if($settings && $settings->theme) {
-       return view('themes/'.$settings->theme.'/confirmed',compact('settings'));
+    if($this->settings() && $this->settings()->theme) {
+      $settings = $this->settings();
+      return view('themes/'.$this->settings()->theme.'/confirmed',compact('settings'));
     }
     return view('themes/default/confirmed');
   }
 
+  /**
+   * Redirect subscriber to Thanks page.
+   *
+   * @return Response
+   */
   public function thanks()
   {
-    $settings = Settings::where('id','!=','')->first();
-    if($settings && $settings->theme) {
-       return view('themes/'.$settings->theme.'/thanks',compact('settings'));
+    if($this->settings() && $this->settings()->theme) {
+      $settings = $this->settings();
+      return view('themes/'.$this->settings()->theme.'/thanks',compact('settings'));
     }
     return view('themes/default/thanks');
   }
@@ -64,110 +73,56 @@ class SubscriberController extends Controller {
    *
    * @return Response
    */
-  public function store(SubscriberFormRequest $request)
+  public function store(SubscriberFormRequest $request, Subscribers $subscribers)
   {
-    //check if subscriber exists
-    $subscriber = Subscribers::where('email', $request->get('email'))->first();
-
-    if($subscriber)
-    {
-      if($subscriber->status == "unsubscribed")
-      {
-        // Re-new subscription
-        $subscriber->updateStatus($subscriber);
-
-        return Redirect('/confirmed')->with('message', Lang::get('admin/subscriber/message.subscription.renew'));
-      }
-      else if ( !$subscriber->confirmed && ($subscriber->status == "subscribed") )
-      {
-        // Send confirm email
-        $this->deliverMail($subscriber,'confirmation');
-
-        return Redirect('/thanks')->with('message', Lang::get('admin/subscriber/email/message.verfiy'));
-
-      }
-      else if(($subscriber->confirmed) && ($subscriber->status == "subscribed"))
-      {
-        $this->deliverMail($subscriber,'confirmed');
-        $messages = "your email address is verified!" ;
-
+    $status = $this->dispatch( new CreateSubscriberCommand( $request->firstName , $request->lastName, $request->email) );
+      if($status == "confirmed"){
         return Redirect('/confirmed')->with('message',Lang::get('admin/subscriber/email/message.verfied'));
+
+      }else if($status == "renew"){
+        return Redirect('/confirmed')->with('message', Lang::get('admin/subscriber/message.subscription.renew'));
+
+      }else {
+        return Redirect('/thanks')->with('message', Lang::get('admin/subscriber/message.register.success'));
       }
-
-    }
-    else
-    {
-      $confirmation_code = substr(md5(uniqid(rand(), true)), 16, 16);
-
-      $subscriber = Subscribers::create([ 'firstName' => $request->get('firstName'),
-                                          'lastName'=> $request->get('lastName'),
-                                          'email'=> $request->get('email'),
-                                          'confirmation_code'=> $confirmation_code,
-                                          'confirmed'=> '0',
-                                          'status'=>'subscribed'
-                                        ]);
-
-      $this->deliverMail($subscriber,'confirmation');
-
-      return Redirect('/thanks')->with('message', Lang::get('admin/subscriber/message.register.success'));
-    }
-
   }
 
   /**
-     * Attempt to confirm a Subscriber account.
-     *
-     * @param $confirmation_code
-     *
-     */
-
+   * Attempt to confirm a Subscriber account.
+   *
+   * @param $confirmation_code
+   *
+   */
   public function confirmSubscriber($confirmation_code)
   {
-    $subscriber = Subscribers::where('confirmation_code','=',$confirmation_code)->first();
-    if ( ! $subscriber )
+    $status = $this->dispatch( new ConfirmSubscriberCommand( $confirmation_code ));
+
+    if ( $status == "false")
     {
       return Redirect('/');
     }
-    $subscriber->update(['confirmed' => '1']);
-
     return Redirect('/confirmed')->with('message', Lang::get('admin/subscriber/email/message.verfied'));
   }
 
   /**
-     * Attempt to unsubscribe a Subscriber.
-     *
-     * @param $confirmation_code
-     *
-     */
+   * Attempt to Unsubscribe a Subscriber.
+   *
+   * @param $confirmation_code
+   *
+   */
   public function unsubscribe($confirmation_code)
   {
-    $subscriber = Subscribers::where('confirmation_code','=',$confirmation_code)->first();
-
-    if ( !$subscriber )
+    $status = $this->dispatch( new UnsubscribeSubscriberCommand( $confirmation_code ));
+    if ( $status == "false")
     {
       return Redirect('/');
     }
-
-    $subscriber->updateStatus($subscriber);
-
     return Redirect('/')->with('message', Lang::get('admin/subscriber/message.subscription.unsubscribe'));
-
   }
 
-  public function deliverMail($subscriber, $subject)
+  public function settings()
   {
-    $data = [ 'name' => $subscriber->firstName ,
-                'email' => $subscriber->email,
-                'id' => $subscriber->id ,
-                'messages' => "Please follow the link below to verify your email address ",
-                'confirmation_code' => $subscriber->confirmation_code
-              ];
-
-    $to = $subscriber->email;
-    Mail::send('emails/confirm',$data, function($message) use ($subject, $to)
-    {
-        $message->to($to)->subject($subject);
-    });
-
+    return Settings::where('id','!=','')->first();
   }
+
 }
