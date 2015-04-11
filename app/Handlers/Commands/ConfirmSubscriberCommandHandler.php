@@ -26,14 +26,17 @@ class ConfirmSubscriberCommandHandler {
 	 */
 	public function handle(ConfirmSubscriberCommand $command)
 	{
+	
 		$subscriber = Subscribers::where('confirmation_code','=',$command->confirmation_code)->first();
-    if ( ! $subscriber )
-    {
-      return "false";
-    }
-    $subscriber->update(['confirmed' => '1']);
+	    
+	    if ( ! $subscriber )
+	    {
+	      return "false";
+	    }
 
-    Event::fire(new SubscriberWasConfirmed($subscriber));
+    	$subscriber->update(['confirmed' => '1']);
+
+    	Event::fire(new SubscriberWasConfirmed($subscriber));
 	}
 
 }

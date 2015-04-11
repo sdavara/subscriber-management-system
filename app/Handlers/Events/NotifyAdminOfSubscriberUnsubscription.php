@@ -31,16 +31,16 @@ class NotifyAdminOfSubscriberUnsubscription {
 		$subscriber = json_decode(json_encode($event), true);
 
 		$data = [ 'Admin'  	 => $Admin['name'],
-              'name'  	 => $subscriber['subscribers']['firstName'],
-              'email'    => $subscriber['subscribers']['email'],
-              'messages'  => "Following lead have unsubscribed!",
+              	'name'  	 => $subscriber['subscribers']['firstName'],
+              	'email'    => $subscriber['subscribers']['email'],
+              	'messages'  => "Following lead have unsubscribed!",
             ];
-    $to = $Admin->email;
+            
+	    $to = $Admin->email;
 
-    Mail::send('emails/notifyadminforsubscription',$data, function($message) use($to)
-    {
-        $message->to($to)->subject('Unsubscribe');
-    });
+	    Mail::send('emails/notifyadminforsubscription',$data, function($message) use($to)
+	    {
+	        $message->to($to)->subject('Unsubscribe');
+	    });
 	}
-
 }

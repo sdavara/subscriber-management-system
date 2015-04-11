@@ -28,14 +28,14 @@ class UnsubscribeSubscriberCommandHandler {
 	{
 		$subscriber =  Subscribers::where('confirmation_code','=',$command->confirmation_code)->first();
 
-    if ( !$subscriber )
-    {
-      return false;
-    }
+	    if ( !$subscriber )
+	    {
+	      return false;
+	    }
 
-    // Cancel subscription
-    $subscriber->update(['status' => 'unsubscribed']);
-    Event::fire(new SubscriberWasUnsubscribed($subscriber));
+	    // Cancel subscription
+	    $subscriber->update(['status' => 'unsubscribed']);
+	    Event::fire(new SubscriberWasUnsubscribed($subscriber));
 	}
 
 }

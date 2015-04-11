@@ -1,5 +1,7 @@
-## Laravel NewsLetter Signup System
+## Laravel Subscriber Managment System
 
+System provides an adhoc way of creating a landing page for any new product or services. You can customize landing page from admin panel based on your requirement. Moreover, this system allows you to manage themes of your landing page. Currently system contains two theme 'dark'
+and 'light'. You can choose from adming panel.
 
 # Install PHP Composer#
 ```
@@ -48,11 +50,11 @@ php artisan serve --port=8000
     - Set Logo for selected theme
     - Set Description
     - Set your own Title & Sub-Title
-- View Details of Leads
+- View Details of Subscriber
 
 
 
-## Leads ##
+## Subscriber ##
 - Gets Subscribed through Subscription form
 - Notification for confiramtion  through Mail
 - Can Renew or Unsubscribe

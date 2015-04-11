@@ -35,12 +35,11 @@ class NotifySubscribersOfSubscription {
               'confirmation_code' => $subscriber['subscribers']['confirmation_code'],
               'confirmed' => $subscriber['subscribers']['confirmed'],
             ];
-    $to = $subscriber['subscribers']['email'];
+	    $to = $subscriber['subscribers']['email'];
 
-    Mail::send('emails/confirm',$data, function($message) use($to)
-    {
-        $message->to($to)->subject('confirmation');
-    });
+	    Mail::send('emails/confirm',$data, function($message) use($to)
+	    {
+	        $message->to($to)->subject('confirmation');
+	    });
 	}
-
 }

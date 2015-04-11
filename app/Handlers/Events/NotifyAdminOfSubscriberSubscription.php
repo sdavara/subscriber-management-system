@@ -28,18 +28,21 @@ class NotifyAdminOfSubscriberSubscription {
 	{
 
 		$Admin = User::where('id','!=','')->first();
+
 		$subscriber = json_decode(json_encode($event), true);
 
-		$data = [ 'Admin'  	 => $Admin['name'],
-              'name'  	 => $subscriber['subscribers']['firstName']." ".$subscriber['subscribers']['lastName'],
-              'email'    => $subscriber['subscribers']['email'],
-              'messages' => "Following lead have subscribed Succesfully!",
+		$data = [ 
+				'Admin'  	 => $Admin['name'],
+            	'name'  	 => $subscriber['subscribers']['firstName']." ".$subscriber['subscribers']['lastName'],
+            	'email'    => $subscriber['subscribers']['email'],
+            	'messages' => "Following subscriber have subscribed Succesfully!",
             ];
-    $to = $Admin->email;
 
-    Mail::send('emails/notifyadminforsubscription',$data, function($message) use($to)
-    {
-        $message->to($to)->subject('confirmation');
-    });
+	    $to = $Admin->email;
+
+	    Mail::send('emails/notifyadminforsubscription',$data, function($message) use($to)
+	    {
+	        $message->to($to)->subject('confirmation');
+	    });
 	}
-	}
+}

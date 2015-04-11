@@ -24,17 +24,4 @@ class Subscribers extends Model {
   protected $fillable = ['firstName', 'lastName', 'email','confirmation_code','confirmed','status'];
 
 
-  public function updateStatus($subscriber)
-  {
-    $subscribers = subscribers::find($subscriber->id);
-    if($subscriber->status == "subscribed")
-    {
-      $subscriber->update(['status' => 'unsubscribed']);
-    }else{
-      $subscriber->update(['status' => 'subscribed']);
-    }
-
-
-  }
-
 }

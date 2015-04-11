@@ -31,7 +31,7 @@ class SubscriberFormRequest extends Request {
 	public function rules()
 	{
 		return [
-				'firstName' => 'required|max:255',
+		'firstName' => 'required|max:255',
         'lastName'  => 'required|max:255',
         'email'     => 'required|email|max:255',
 		];
