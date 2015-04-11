@@ -20,6 +20,10 @@ class CreateSettingTable extends Migration {
 			$table->string('subtitle',100);
 			$table->longtext('description');
 			$table->string('theme',60);
+			$table->string('twitter', 250)->nullable;
+			$table->string('facebook', 250)->nullable;
+			$table->string('googleplus', 250)->nullable;
+			$table->string('linkedin', 250)->nullable;
 			$table->timestamps();
 		});
 	}
