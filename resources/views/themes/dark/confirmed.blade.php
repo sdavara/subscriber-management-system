@@ -38,8 +38,6 @@
   <body class="body">
     <div class="layer"></div>
     <div class="content">
-
-
       <div class="container">
         <div class="row">
 
@@ -48,11 +46,9 @@
            @if($settings->logo)
               <img src="uploads/{{$settings->logo}}" height="50">
            @else
-              <img src="img/logo-1.png" height="50">
+              <img src="/img/improwised.jpg" height="50">
            @endif
-
           </div>
-
 
           <!-- title -->
           <div class="title clearfix">
@@ -60,9 +56,9 @@
               <div class="text-center">
 
                @if($settings->title)
-                  <h1> {{$settings->title}}</h1>
+                  <h1>{{$settings->title}}</h1>
                @else
-                   <h1> News Letter</h1>
+                   <h1>News Letter</h1>
                @endif
 
               </div>
@@ -83,30 +79,4 @@
             </p>
           </div>
           </div>
-
-          <!-- social share -->
-          <div class="clearfix social_share_copywrite">
-            <p class="social_share pull-right">
-              <a href=""><i class="fa fa-facebook-square"></i></a>
-              <a href=""><i class="fa fa-twitter-square"></i></a>
-              <a href=""><i class="fa fa-google-plus-square"></i></a>
-              <a href=""><i class="fa fa-linkedin-square"></i></a>
-            </p>
-            <p class="copywrite pull-left">© 2015. Improwised Technologies Pvt. Ltd.</p>
-          </div>
-
-        </div>
-
-
-      </div>
-
-
-    </div>
-
-    @yield('scripts')
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  </body>
-</html>
+          @include('themes/dark/includes/footer')

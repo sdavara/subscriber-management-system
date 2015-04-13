@@ -38,8 +38,6 @@
   <body class="body">
     <div class="layer"></div>
     <div class="content">
-
-
       <div class="container">
         <div class="row">
 
@@ -50,9 +48,7 @@
            @else
               <img src="/img/improwised.jpg" height="50">
            @endif
-
           </div>
-
 
           <!-- title -->
           <div class="title clearfix">
@@ -66,7 +62,6 @@
               </div>
             </div>
           </div>
-
 
           <!-- description -->
           <div class="des clearfix">
@@ -111,32 +106,4 @@
             </div>
           </div>
 
-          <!-- social share -->
-          <div class="clearfix social_share_copywrite">
-            <p class="copywrite pull-left">© 2015. Improwised Technologies Pvt. Ltd.</p>
-          </div>
-
-        </div>
-
-
-      </div>
-
-
-    </div>
-
-    @yield('scripts')
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  </body>
-
-  <script type="text/javascript">
-  $(document).ready(function (errors){
-   @if(($errors->first('firstName')) || ($errors->first('email')) || ($errors->first('lastName')) )
-    $("button[name='submit']").focus();
-  @endif
-  });
-</script>
-
-</html>
+ @include('themes/dark/includes/footer')

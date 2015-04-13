@@ -7,11 +7,11 @@
           <div class="text-center">
             <div class="newsletter_logo">
 
-            @if($settings->logo)
-              <img src="uploads/{{$settings->logo}}">
-              @else
-               <img src="/img/improwised.jpg">
-            @endif
+              @if($settings->logo)
+                <img src="uploads/{{$settings->logo}}">
+                @else
+                 <img src="/img/improwised.jpg">
+              @endif
 
             </div>
           </div>
@@ -24,9 +24,10 @@
       <div class="row">
         <div class="text-center">
           <div class="newsletter_title">
-          @if($settings->title)
-                  <h1>{{$settings->title}}</h1>
-          @endif
+
+            @if($settings->title)
+              <h1>{{$settings->title}}</h1>
+            @endif
 
           </div>
         </div>
@@ -40,7 +41,7 @@
           <div class="newsletter_description">
             <p>
             @if($settings->description)
-                 {{$settings->description}}
+              {{$settings->description}}
             @endif
             </p>
           </div>
@@ -52,11 +53,11 @@
 
 
           <!-- subscription block -->
-          <div class="subscription_block" >
-             @if (Session::has('message'))
-                <div class="alert alert-info">
-                  <p>{{ Session::get('message') }}</p>
-                </div>
+          <div class="subscription_block">
+            @if (Session::has('message'))
+              <div class="alert alert-info">
+                <p>{{ Session::get('message') }}</p>
+              </div>
             @endif
 
             {!!Form::open(['url'=>'/subscribe','method'=>'POST','id'=>'subscription_block'])!!}
@@ -86,20 +87,4 @@
             {!!Form::close()!!}
 
             </div>
-
-          <!-- social share & copywrite -->
-          <div class="clearfix social_share_copywrite">
-              <p class="copywrite pull-left">© 2015. Improwised Technologies Pvt. Ltd.</p>
-          </div>
-
-        </div>
-      </div>
-    </div>
-    @yield('scripts')
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  </body>
  @include('themes/default/includes/footer')

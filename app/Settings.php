@@ -21,6 +21,6 @@ class Settings extends Model {
    *
    * @var array
    */
-  protected $fillable = ['logo', 'title', 'description', 'subtitle', 'theme'];
+  protected $fillable = ['logo', 'title', 'description', 'subtitle', 'theme', 'twitter', 'facebook', 'googleplus', 'linkedin'];
 
 }

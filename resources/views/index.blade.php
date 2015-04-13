@@ -107,10 +107,10 @@
           <!-- social share & copywrite -->
           <div class="clearfix social_share_copywrite">
             <p class="social_share pull-right">
-              <a href=""><i class="fa fa-facebook-square"></i></a>
-              <a href=""><i class="fa fa-twitter-square"></i></a>
-              <a href=""><i class="fa fa-google-plus-square"></i></a>
-              <a href=""><i class="fa fa-linkedin-square"></i></a>
+              <a target="_blank" href="https://www.facebook.com"><i class="fa fa-facebook-square"></i></a>
+              <a target="_blank" href="https://twitter.com/"><i class="fa fa-twitter-square"></i></a>
+              <a target="_blank" href="https://plus.google.com"><i class="fa fa-google-plus-square"></i></a>
+              <a target="_blank" href="https://www.linkedin.com"><i class="fa fa-linkedin-square"></i></a>
             </p>
             <p class="copywrite pull-left">© 2015. Improwised Technologies Pvt. Ltd.</p>
           </div>
@@ -128,7 +128,7 @@
 <script type="text/javascript">
   $(document).ready(function (errors){
    @if(($errors->first('firstName')) || ($errors->first('email')) || ($errors->first('lastName')) )
-    $("button[name='submit']").focus();
+    $('#submit').focus();
   @endif
   });
 </script>
