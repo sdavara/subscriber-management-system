@@ -42,7 +42,7 @@ php artisan serve
 - There is an admin user already seeded to system. Admin can logon to system from '/admin' route.
    - Default user name is 'user@gmail.com' and password is '123123'
 
-### Admin can do following things: ### 
+### Admin can do following things:
 - Can Manage the Theme
 - Change settings of Theme
     - Set Logo for selected theme
