@@ -3,11 +3,16 @@
 System provides an adhoc way of creating a landing page for any new product or services. You can customize landing page from admin panel based on your requirement. Moreover, this system allows you to manage themes of your landing page. Currently system contains two theme 'dark'
 and 'light'. You can choose from adming panel.
 
+
+# Vision #
+
+- A platform to host your Landing Page.
+
+
 # Install PHP Composer#
 ```
 composer install
 ```
-
 
 # Database and Seed #
 
@@ -24,27 +29,20 @@ composer install
  ```
 
 
-
 # Run the application #
 ```
-php artisan serve --port=8000
+php artisan serve 
 ```
 
-
-## Admin Dashboard ##
-- Follow the Routes file
-    - "\admmin" rote will lead to login page for basic auth
-    - Admin can login with the User Credential provided in User Table
-
-- Add your Mailgun private key and domain to app/config/mail.php You can make additional settings here if you desire
+# Configuration of Email
+- Add your Mailgun private key and domain to app/config/mail.php You can make additional settings here if you wishes.
 
 
-# Vision #
+## Admin Logon ##
+- There is an admin user already seeded to system. Admin can logon to system from '/admin' route.
+   - Default user name is 'user@gmail.com' and password is '123123'
 
-- A platform to host your Landing Page.
-
-
-## Admin ##
+### Admin can do following things: ### 
 - Can Manage the Theme
 - Change settings of Theme
     - Set Logo for selected theme
@@ -52,9 +50,3 @@ php artisan serve --port=8000
     - Set your own Title & Sub-Title
 - View Details of Subscriber
 
-
-
-## Subscriber ##
-- Gets Subscribed through Subscription form
-- Notification for confiramtion  through Mail
-- Can Renew or Unsubscribe
